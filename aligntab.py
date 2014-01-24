@@ -149,6 +149,9 @@ class AlignTabCommand(sublime_plugin.TextCommand):
             # insert history and reset index
             if not HIST or (user_input!= HIST[-1] and user_input!= "last_rexp"): HIST.append(user_input)
             AlignTabHistory.index = None
+        # If live is enabled, then don't re-change the text. We're done
+        if (event_type == "done") and (AlignTabCommand.live_enabled):
+            return
         
         user_input = get_named_pattern(user_input)
         [regex, option, f] = input_parser(user_input)
